@@ -3,15 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandUsers.WebApi", "StandUsers.WebApi\StandUsers.WebApi.csproj", "{EF3341B8-7885-4B55-81E5-9B019AD773EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StandUsers.WebApi", "StandUsers.WebApi\StandUsers.WebApi.csproj", "{EF3341B8-7885-4B55-81E5-9B019AD773EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandUsers.Domain", "StandUsers.Domain\StandUsers.Domain.csproj", "{97483F3F-F5E6-47E1-8D21-C6284F92242B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StandUsers.Domain", "StandUsers.Domain\StandUsers.Domain.csproj", "{97483F3F-F5E6-47E1-8D21-C6284F92242B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandUsers.Infrastructure", "StandUsers.Infrastructure\StandUsers.Infrastructure.csproj", "{E7E6DA38-8C8F-4B75-86D2-8A84E047248B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StandUsers.Infrastructure", "StandUsers.Infrastructure\StandUsers.Infrastructure.csproj", "{E7E6DA38-8C8F-4B75-86D2-8A84E047248B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandUsers.Application", "StandUsers.Application\StandUsers.Application.csproj", "{E2D987D4-67D9-441E-A429-5AC64F4526D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StandUsers.Application", "StandUsers.Application\StandUsers.Application.csproj", "{E2D987D4-67D9-441E-A429-5AC64F4526D1}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{8E82FB96-FD7C-4F59-B78D-16A5C0C9C3A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandUsers.Workers", "StandUsers.Workers\StandUsers.Workers.csproj", "{E87D8EA5-0ED6-4423-9E91-3D5F655CF46E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandUsers.HealthChecks", "StandUsers.HealthChecks\StandUsers.HealthChecks.csproj", "{1DE7CECB-EE53-4992-8EED-EC048D8F8056}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{8E82FB96-FD7C-4F59-B78D-16A5C0C9C3A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E82FB96-FD7C-4F59-B78D-16A5C0C9C3A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E82FB96-FD7C-4F59-B78D-16A5C0C9C3A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E87D8EA5-0ED6-4423-9E91-3D5F655CF46E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E87D8EA5-0ED6-4423-9E91-3D5F655CF46E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E87D8EA5-0ED6-4423-9E91-3D5F655CF46E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E87D8EA5-0ED6-4423-9E91-3D5F655CF46E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DE7CECB-EE53-4992-8EED-EC048D8F8056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DE7CECB-EE53-4992-8EED-EC048D8F8056}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DE7CECB-EE53-4992-8EED-EC048D8F8056}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DE7CECB-EE53-4992-8EED-EC048D8F8056}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

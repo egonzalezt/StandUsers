@@ -3,5 +3,5 @@
 public interface IValidateUserUseCase
 {
     Task<bool> EmailExistsAsync(string email);
-    Task<bool> IdentificationNumberExistsAsync(string identificationNumber);
+    Task<bool> IdentificationNumberExistsAsync(int identificationNumber);
 }

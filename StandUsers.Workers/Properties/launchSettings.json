@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "StandUsers.Workers": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

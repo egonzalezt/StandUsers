@@ -35,7 +35,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("check-email")]
-    public async Task<ActionResult<ResourceExistsResponse>> CheckEmail([FromQuery] EmailDto email)
+    public async Task<ActionResult<ResourceExistsResponse>> CheckEmailAsync([FromQuery] EmailDto email)
     {
         var emailExists = await _validateUserUseCase.EmailExistsAsync(email.Value);
         var message = emailExists ? "Email already in use" : "Email not in use";
@@ -44,9 +44,9 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("check-identification")]
-    public async Task<ActionResult<ResourceExistsResponse>> CheckIdentification([FromQuery] IdentificationDto identificationNumber)
+    public async Task<ActionResult<ResourceExistsResponse>> CheckIdentificationAsync([FromQuery] int identificationNumber)
     {
-        var identificationExists = await _validateUserUseCase.IdentificationNumberExistsAsync(identificationNumber.Value);
+        var identificationExists = await _validateUserUseCase.IdentificationNumberExistsAsync(identificationNumber);
         var message = identificationExists ? "Identification already in use" : "Identification not in use";
         var response = ResourceExistsResponse.Build(identificationExists, message);
         return Ok(response);

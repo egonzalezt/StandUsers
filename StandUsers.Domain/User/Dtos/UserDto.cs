@@ -8,8 +8,12 @@ public class UserDto
     public string Name { get; set; }
 
     [Required]
-    public EmailDto Email { get; set; }
+    [EmailAddress]
+    public string Email { get; set; }
 
     [Required]
-    public IdentificationDto IdentificationNumber { get; set; }
+    public string Direction { get; set; }
+
+    [Required]
+    public int IdentificationNumber { get; set; }
 }

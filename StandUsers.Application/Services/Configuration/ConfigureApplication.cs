@@ -1,6 +1,5 @@
 ﻿namespace StandUsers.Application.Services.Configuration;
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StandUsers.Application.Interfaces;
 using StandUsers.Application.UseCases;

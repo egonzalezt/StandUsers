@@ -31,15 +31,18 @@ namespace StandUsers.Infrastructure.Migrations
                     b.Property<DateTime?>("Created")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Direction")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<string>("IdentificationNumber")
-                        .IsRequired()
+                    b.Property<int>("IdentificationNumber")
                         .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()

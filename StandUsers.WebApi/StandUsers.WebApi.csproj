@@ -23,7 +23,9 @@
   <ItemGroup>
     <ProjectReference Include="..\StandUsers.Application\StandUsers.Application.csproj" />
     <ProjectReference Include="..\StandUsers.Domain\StandUsers.Domain.csproj" />
+    <ProjectReference Include="..\StandUsers.HealthChecks\StandUsers.HealthChecks.csproj" />
     <ProjectReference Include="..\StandUsers.Infrastructure\StandUsers.Infrastructure.csproj" />
+    <ProjectReference Include="..\StandUsers.Workers\StandUsers.Workers.csproj" />
   </ItemGroup>
 
   <ItemGroup>

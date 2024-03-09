@@ -18,7 +18,8 @@ namespace StandUsers.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     Email = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    IdentificationNumber = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
+                    Direction = table.Column<string>(type: "text", nullable: false),
+                    IdentificationNumber = table.Column<int>(type: "integer", maxLength: 10, nullable: false),
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Updated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },

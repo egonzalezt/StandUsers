@@ -1,6 +1,7 @@
 ﻿namespace StandUsers.Domain.User;
 
 using SharedKernel;
+using StandUsers.Domain.User.Dtos;
 
 public class User : Entity
 {
@@ -8,21 +9,24 @@ public class User : Entity
         Guid id,
         string name, 
         string email, 
-        string identificationNumber
+        string direction,
+        int identificationNumber
     ) : base(id)
     {
         Name = name;
         Email = email;
+        Direction = direction;
         IdentificationNumber = identificationNumber;
     }
 
     public string Name { get; private set; }
     public string Email { get; private set; }
-    public string IdentificationNumber { get; private set; }
+    public string Direction { get; private set; }
+    public int IdentificationNumber { get; private set; }
 
-    public static User Build(string name, string email, string identificationNumber)
+    public static User Build(UserDto userDto)
     {
         var id = Guid.NewGuid();
-        return new User(id, name, email.ToLower(), identificationNumber);
+        return new User(id, userDto.Name, userDto.Email.ToLower(), userDto.Direction, userDto.IdentificationNumber);
     }
 }

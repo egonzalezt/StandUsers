@@ -24,17 +24,17 @@ internal class CreateUserUseCase : ICreateUserUseCase
 
     public async Task<Guid> ExecuteAsync(UserDto userDto)
     {
-        var emailAlreadyExist = await _userCommandRepository.ExistsByEmailAsync( userDto.Email.Value );
+        var emailAlreadyExist = await _userCommandRepository.ExistsByEmailAsync( userDto.Email );
         if (emailAlreadyExist)
         {
-            throw new EmailAlreadyExists(userDto.Email.Value);
+            throw new EmailAlreadyExists(userDto.Email);
         }
-        var identificationNumberAlreadyExists = await _userCommandRepository.ExistsByIdentificationNumberAsync(userDto.IdentificationNumber.Value);
+        var identificationNumberAlreadyExists = await _userCommandRepository.ExistsByIdentificationNumberAsync(userDto.IdentificationNumber);
         if(identificationNumberAlreadyExists)
         {
-            throw new IdentificationNumberAlreadyExists(userDto.IdentificationNumber.Value);
+            throw new IdentificationNumberAlreadyExists(userDto.IdentificationNumber.ToString());
         }
-        var user = User.Build(userDto.Name, userDto.Email.Value, userDto.IdentificationNumber.Value);
+        var user = User.Build(userDto);
         await _userQueryRepository.CreateAsync(user);
         return user.Id;
     }

@@ -29,7 +29,7 @@ internal class UserCommandRepository : IUserCommandRepository
         return await _context.Users.AnyAsync(u => u.Email == email);
     }
 
-    public async Task<bool> ExistsByIdentificationNumberAsync(string identificationNumber)
+    public async Task<bool> ExistsByIdentificationNumberAsync(int identificationNumber)
     {
         return await _context.Users.AnyAsync(u => u.IdentificationNumber == identificationNumber);
     }

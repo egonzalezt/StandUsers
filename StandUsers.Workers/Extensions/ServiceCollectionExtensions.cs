@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
 using MessageBroker.Options;
 using MessageBroker;
+using Microsoft.Extensions.Hosting;
 
 public static class ServiceCollectionExtensions
 {
@@ -16,7 +17,9 @@ public static class ServiceCollectionExtensions
             configuration.GetSection("RabbitMQ:Connection").Bind(factory);
             return factory;
         });
-        services.Configure<ConsumerConfiguration>(configuration.GetSection("RabbitMQ:Queues"));
+        services.Configure<ConsumerConfiguration>(configuration.GetSection("RabbitMQ:Queues:Consumer"));
+        services.Configure<PublisherConfiguration>(configuration.GetSection("RabbitMQ:Queues:Publisher"));
         services.AddHostedService<UsersWorker>();
+        services.AddHostedService<GovCarpetaWorker>();
     }
 }

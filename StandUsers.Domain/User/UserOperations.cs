@@ -2,5 +2,7 @@
 
 public enum UserOperations
 {
-    CreateUser
+    CreateUser,
+    UnregisterUser,
+    VerifyUser
 }

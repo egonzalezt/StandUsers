@@ -1,8 +1,9 @@
 ﻿namespace StandUsers.Application.Interfaces; 
 
 using Domain.User.Dtos;
+using Domain.User;
 
 public interface ICreateUserUseCase
 {
-    Task<Guid> ExecuteAsync(UserDto userDto);
+    Task<User> ExecuteAsync(UserDto userDto);
 }

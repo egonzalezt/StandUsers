@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using HealthChecks;
 using HealthChecks.Events;
-using Workers.Exceptions;
+using Exceptions;
 
 public abstract class BaseRabbitMQWorker : BackgroundService
 {
@@ -45,6 +45,12 @@ public abstract class BaseRabbitMQWorker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        await Task.Yield();
+        await SubscribeAsync(stoppingToken);
+    }
+
+    internal async Task SubscribeAsync(CancellationToken stoppingToken)
+    {
         _logger.LogInformation("Subscribed to the queue {queue}", _queueName);
         _consumer.Received += async (sender, eventArgs) =>
         {
@@ -53,7 +59,6 @@ public abstract class BaseRabbitMQWorker : BackgroundService
             {
                 _logger.LogInformation("New message received");
                 await ProcessMessageAsync(eventArgs, _channel);
-                _channel.BasicAck(eventArgs.DeliveryTag, false);
             }
             catch (JsonException ex)
             {
@@ -69,17 +74,30 @@ public abstract class BaseRabbitMQWorker : BackgroundService
                 };
                 var properties = _channel.CreateBasicProperties();
                 properties.Headers = headers;
+
                 _logger.LogError(ex, "Invalid Body");
                 _channel.BasicAck(eventArgs.DeliveryTag, false);
             }
             catch (InvalidEventTypeException ex)
             {
+                var headers = new Dictionary<string, object>
+                {
+                    { "ProcessFailed", true }
+                };
+                var properties = _channel.CreateBasicProperties();
+                properties.Headers = headers;
                 _logger.LogError(ex, "Invalid EventType");
                 _channel.BasicAck(eventArgs.DeliveryTag, false);
             }
             catch (HeaderNotFoundException ex)
             {
-                _logger.LogError(ex, "Requested header not found");
+                var headers = new Dictionary<string, object>
+                {
+                    { "ProcessFailed", true }
+                };
+                var properties = _channel.CreateBasicProperties();
+                properties.Headers = headers;
+                _logger.LogError(ex, "Invalid EventType");
                 _channel.BasicAck(eventArgs.DeliveryTag, false);
             }
             catch (Exception ex)
@@ -92,7 +110,7 @@ public abstract class BaseRabbitMQWorker : BackgroundService
 
         while (!stoppingToken.IsCancellationRequested)
         {
-            await Task.Delay(1000, stoppingToken);
+            await Task.Delay(500, stoppingToken);
         }
     }
 

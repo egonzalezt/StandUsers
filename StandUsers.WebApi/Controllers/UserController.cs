@@ -9,29 +9,11 @@ using Responses;
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly ICreateUserUseCase _createUserUseCase;
     private readonly IValidateUserUseCase _validateUserUseCase;
 
-    public UserController(ICreateUserUseCase createUserUseCase, IValidateUserUseCase validateUserUseCase)
+    public UserController(IValidateUserUseCase validateUserUseCase)
     {
-        _createUserUseCase = createUserUseCase;
         _validateUserUseCase = validateUserUseCase;
-    }
-
-    /// <summary>
-    /// Create new user
-    /// </summary>
-    /// <param name="request">The user data.</param>
-    /// <returns>User Id</returns>
-    /// <response code="200">User Created</response>
-    /// <response code="409">Conflict Email or IdentificationNumber already exists on the system</response>
-    [HttpPost()]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<UserCreatedResponse>> CreateUserAsync([FromBody]UserDto request)
-    {
-        var id = await _createUserUseCase.ExecuteAsync(request);
-        return Ok(UserCreatedResponse.Build(id));
     }
 
     [HttpGet("check-email")]

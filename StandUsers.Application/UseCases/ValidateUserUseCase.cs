@@ -1,7 +1,7 @@
 ﻿namespace StandUsers.Application.UseCases;
 
 using Application.Interfaces;
-using StandUsers.Domain.User.Repositories;
+using Domain.User.Repositories;
 using System.Threading.Tasks;
 
 internal class ValidateUserUseCase : IValidateUserUseCase

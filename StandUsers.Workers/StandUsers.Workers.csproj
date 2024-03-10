@@ -16,6 +16,7 @@
     <ProjectReference Include="..\StandUsers.Application\StandUsers.Application.csproj" />
     <ProjectReference Include="..\StandUsers.Domain\StandUsers.Domain.csproj" />
     <ProjectReference Include="..\StandUsers.HealthChecks\StandUsers.HealthChecks.csproj" />
+    <ProjectReference Include="..\StandUsers.Infrastructure\StandUsers.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -16,6 +16,5 @@ internal class UserQueryRepository : IUserQueryRepository
     public async Task CreateAsync(User user)
     {
         await _context.AddAsync(user);
-        await _context.SaveChangesAsync();
     }
 }

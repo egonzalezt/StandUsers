@@ -14,22 +14,23 @@ using Domain.User;
 using Domain.User.Dtos;
 using Application.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using Infrastructure.EntityFrameworkCore.DbContext;
+using StandUsers.Domain.Centralizer.Dtos;
+using StandUsers.Domain.SharedKernel;
 
-public class UsersWorker : BaseRabbitMQWorker
+public class UsersWorker(
+    ILogger<UsersWorker> logger,
+    IServiceProvider serviceProvider,
+    ConnectionFactory rabbitConnection,
+    IHealthCheckNotifier healthCheckNotifier,
+    SystemStatusMonitor statusMonitor,
+    IOptions<ConsumerConfiguration> queues,
+    IOptions<PublisherConfiguration> publisherQueue,
+    IOptions<OperatorIdentification> providerIdentification
+    ) : BaseRabbitMQWorker(logger, rabbitConnection.CreateConnection(), healthCheckNotifier, statusMonitor, queues.Value.CreateUserQueue)
 {
-    private readonly ILogger<UsersWorker> _logger;
-    private readonly IServiceProvider _serviceProvider;
-
-    public UsersWorker(
-        ILogger<UsersWorker> logger,
-        ConnectionFactory rabbitConnection,
-        IHealthCheckNotifier healthCheckNotifier,
-        SystemStatusMonitor statusMonitor,
-        IOptions<ConsumerConfiguration> queues
-    ) : base(logger, rabbitConnection.CreateConnection(), healthCheckNotifier, statusMonitor, queues.Value.CreateUserQueue)
-    {
-        _logger = logger;
-    }
+    PublisherConfiguration _publisherQueue = publisherQueue.Value;
+    OperatorIdentification _providerIdentification = providerIdentification.Value;
 
     protected override async Task ProcessMessageAsync(BasicDeliverEventArgs eventArgs, IModel channel)
     {
@@ -37,18 +38,28 @@ public class UsersWorker : BaseRabbitMQWorker
         var message = Encoding.UTF8.GetString(body);
         var headers = eventArgs.BasicProperties.Headers;
         var operation = headers.GetUserEventType();
-        using var scope = _serviceProvider.CreateScope();
-        switch (operation)
+        using var scope = serviceProvider.CreateScope();
+
+        if(operation is UserOperations.CreateUser)
         {
-            case UserOperations.CreateUser:
-                var userDto = JsonSerializer.Deserialize<UserDto>(message) ?? throw new InvalidBodyException();
-                _logger.LogInformation("Processing request for user {userId}", userDto.IdentificationNumber);
-                var useCaseSelector = scope.ServiceProvider.GetRequiredService<ICreateUserUseCase>();
-                await useCaseSelector.ExecuteAsync(userDto);
-                break;
-            default:
-                _logger.LogWarning("Not supported Operation: {0}", operation);
-                throw new InvalidEventTypeException();
+            var userDto = JsonSerializer.Deserialize<UserDto>(message) ?? throw new InvalidBodyException();
+            logger.LogInformation("Processing request for user {userId}", userDto.IdentificationNumber);
+            var useCaseSelector = scope.ServiceProvider.GetRequiredService<ICreateUserUseCase>();
+            var user = await useCaseSelector.ExecuteAsync(userDto);
+            var createUserDto = CreateUserDto.Build(user, _providerIdentification);
+            var requestHeaders = new Dictionary<string, object>
+                {
+                    { "UserId", user.Id.ToString() },
+                    { "EventType", operation.ToString() }
+                };
+            var properties = channel.CreateBasicProperties();
+            properties.Headers = requestHeaders;
+            string jsonResult = JsonSerializer.Serialize(createUserDto);
+            byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonResult);
+            var requestQueue = _publisherQueue.UserRequestQueue;
+            channel.BasicPublish("", requestQueue, properties, jsonBytes);
+            var database = scope.ServiceProvider.GetRequiredService<StandUsersDbContext>();
+            await database.SaveChangesAsync();
         }
     }
 }

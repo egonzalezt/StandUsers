@@ -57,6 +57,7 @@ public class UsersWorker(
             channel.BasicPublish("", requestQueue, properties, jsonBytes);
             var database = scope.ServiceProvider.GetRequiredService<StandUsersDbContext>();
             await database.SaveChangesAsync();
+            channel.BasicAck(eventArgs.DeliveryTag, false);
         }
     }
 }

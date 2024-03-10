@@ -5,7 +5,6 @@ using Microsoft.Extensions.Options;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client;
 using HealthChecks;
-using Options;
 using Domain.User;
 using Workers.Exceptions;
 using Workers.Extensions;
@@ -15,6 +14,7 @@ using Domain.Centralizer;
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.EntityFrameworkCore.DbContext;
 using System;
+using Infrastructure.MessageBroker.Options;
 
 public class GovCarpetaWorker : BaseRabbitMQWorker
 {

@@ -3,9 +3,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
-using MessageBroker.Options;
 using MessageBroker;
-using Microsoft.Extensions.Hosting;
+using Infrastructure.MessageBroker.Options;
 
 public static class ServiceCollectionExtensions
 {

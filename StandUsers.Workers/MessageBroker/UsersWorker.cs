@@ -6,7 +6,6 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using HealthChecks;
 using Workers.Exceptions;
-using Workers.MessageBroker.Options;
 using System.Text.Json;
 using System.Text;
 using Workers.Extensions;
@@ -15,8 +14,10 @@ using Domain.User.Dtos;
 using Application.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.EntityFrameworkCore.DbContext;
-using StandUsers.Domain.Centralizer.Dtos;
-using StandUsers.Domain.SharedKernel;
+using Domain.Centralizer.Dtos;
+using Domain.SharedKernel;
+using Infrastructure.MessageBroker.Options;
+using StandUsers.Infrastructure.MessageBroker;
 
 public class UsersWorker(
     ILogger<UsersWorker> logger,
@@ -47,13 +48,9 @@ public class UsersWorker(
             var useCaseSelector = scope.ServiceProvider.GetRequiredService<ICreateUserUseCase>();
             var user = await useCaseSelector.ExecuteAsync(userDto);
             var createUserDto = CreateUserDto.Build(user, _providerIdentification);
-            var requestHeaders = new Dictionary<string, object>
-                {
-                    { "UserId", user.Id.ToString() },
-                    { "EventType", operation.ToString() }
-                };
+            var requestHeaders = new EventHeaders(operation.ToString(), user.Id);
             var properties = channel.CreateBasicProperties();
-            properties.Headers = requestHeaders;
+            properties.Headers = requestHeaders.GetAttributesAsDictionary();
             string jsonResult = JsonSerializer.Serialize(createUserDto);
             byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonResult);
             var requestQueue = _publisherQueue.UserRequestQueue;

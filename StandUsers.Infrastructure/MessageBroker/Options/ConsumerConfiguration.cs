@@ -1,4 +1,4 @@
-﻿namespace StandUsers.Workers.MessageBroker.Options;
+﻿namespace StandUsers.Infrastructure.MessageBroker.Options;
 
 public class ConsumerConfiguration
 {

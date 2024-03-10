@@ -7,8 +7,8 @@ using System.Text;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using HealthChecks;
-using HealthChecks.Events;
+using Frieren_Guard;
+using Frieren_Guard.Events;
 using Exceptions;
 
 public abstract class BaseRabbitMQWorker : BackgroundService

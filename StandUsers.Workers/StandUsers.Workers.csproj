@@ -10,12 +10,12 @@
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions" Version="8.0.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
     <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
+    <PackageReference Include="Frieren-Guard" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\StandUsers.Application\StandUsers.Application.csproj" />
     <ProjectReference Include="..\StandUsers.Domain\StandUsers.Domain.csproj" />
-    <ProjectReference Include="..\StandUsers.HealthChecks\StandUsers.HealthChecks.csproj" />
     <ProjectReference Include="..\StandUsers.Infrastructure\StandUsers.Infrastructure.csproj" />
   </ItemGroup>
 

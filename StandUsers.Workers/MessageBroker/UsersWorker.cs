@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using HealthChecks;
+using Frieren_Guard;
 using Workers.Exceptions;
 using System.Text.Json;
 using System.Text;

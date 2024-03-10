@@ -16,8 +16,14 @@ public static class ServiceCollectionExtensions
             configuration.GetSection("RabbitMQ:Connection").Bind(factory);
             return factory;
         });
-        services.Configure<ConsumerConfiguration>(configuration.GetSection("RabbitMQ:Queues:Consumer"));
-        services.Configure<PublisherConfiguration>(configuration.GetSection("RabbitMQ:Queues:Publisher"));
+
+        services.Configure<ConsumerConfiguration>(options =>
+            configuration.GetSection("RabbitMQ:Queues:Consumer").Bind(options)
+        );
+        services.Configure<PublisherConfiguration>(options =>
+            configuration.GetSection("RabbitMQ:Queues:Publisher").Bind(options)
+        );
+
         services.AddHostedService<UsersWorker>();
         services.AddHostedService<GovCarpetaWorker>();
     }

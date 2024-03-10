@@ -12,7 +12,7 @@ public class User : Entity
         string name, 
         string email, 
         string direction,
-        int identificationNumber
+        long identificationNumber
     ) : base(id)
     {
         Name = name;
@@ -24,7 +24,7 @@ public class User : Entity
     public string Name { get; private set; }
     public string Email { get; private set; }
     public string Direction { get; private set; }
-    public int IdentificationNumber { get; private set; }
+    public long IdentificationNumber { get; private set; }
     public bool GovCarpetaVerified { get; private set; } = false;
     public bool Active { get; private set; } = false;
 
@@ -52,7 +52,7 @@ public class User : Entity
         Active = false;
     }
 
-    private static Guid GenerateGuidFromUserIdentificationNumber(int identificationNumber)
+    private static Guid GenerateGuidFromUserIdentificationNumber(long identificationNumber)
     {
         byte[] userIdBytes = Encoding.UTF8.GetBytes(identificationNumber.ToString());
         byte[] hash = SHA1.HashData(userIdBytes);

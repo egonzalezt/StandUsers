@@ -17,7 +17,7 @@ using Infrastructure.EntityFrameworkCore.DbContext;
 using Domain.Centralizer.Dtos;
 using Domain.SharedKernel;
 using Infrastructure.MessageBroker.Options;
-using StandUsers.Infrastructure.MessageBroker;
+using Infrastructure.MessageBroker;
 
 public class UsersWorker(
     ILogger<UsersWorker> logger,

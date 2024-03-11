@@ -14,7 +14,7 @@ public class CreateUserDto
     [JsonPropertyName("email")]
     public string Email { get; set; }
     [JsonPropertyName("operatorId")]
-    public int OperatorId { get; set; }
+    public string OperatorId { get; set; }
     [JsonPropertyName("operatorName")]
     public string OperatorName { get; set; }
 
@@ -26,7 +26,7 @@ public class CreateUserDto
             Name = user.Name,
             Address = user.Direction,
             Email = user.Email,
-            OperatorId = providerIdentification.Id,
+            OperatorId = providerIdentification.Uid,
             OperatorName = providerIdentification.Name,
         };
     }

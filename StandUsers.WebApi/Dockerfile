@@ -10,6 +10,10 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["StandUsers.WebApi/StandUsers.WebApi.csproj", "StandUsers.WebApi/"]
+COPY ["StandUsers.Application/StandUsers.Application.csproj", "StandUsers.Application/"]
+COPY ["StandUsers.Domain/StandUsers.Domain.csproj", "StandUsers.Domain/"]
+COPY ["StandUsers.Infrastructure/StandUsers.Infrastructure.csproj", "StandUsers.Infrastructure/"]
+COPY ["StandUsers.Workers/StandUsers.Workers.csproj", "StandUsers.Workers/"]
 RUN dotnet restore "./StandUsers.WebApi/./StandUsers.WebApi.csproj"
 COPY . .
 WORKDIR "/src/StandUsers.WebApi"

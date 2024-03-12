@@ -12,6 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddServices(builder.Configuration);
 builder.Services.Configure<OperatorIdentification>(builder.Configuration.GetSection("OperatorInformation"));
+builder.Configuration.AddEnvironmentVariables();
 
 var app = builder.Build();
 

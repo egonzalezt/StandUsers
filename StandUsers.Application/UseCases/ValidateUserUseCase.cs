@@ -18,7 +18,7 @@ internal class ValidateUserUseCase : IValidateUserUseCase
         return await _userCommandRepository.ExistsByEmailAsync(email);
     }
 
-    public async Task<bool> IdentificationNumberExistsAsync(int identificationNumber)
+    public async Task<bool> IdentificationNumberExistsAsync(long identificationNumber)
     {
         return await _userCommandRepository.ExistsByIdentificationNumberAsync(identificationNumber);
     }

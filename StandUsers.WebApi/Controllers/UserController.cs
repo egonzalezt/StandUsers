@@ -26,7 +26,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("check-identification")]
-    public async Task<ActionResult<ResourceExistsResponse>> CheckIdentificationAsync([FromQuery] int identificationNumber)
+    public async Task<ActionResult<ResourceExistsResponse>> CheckIdentificationAsync([FromQuery] long identificationNumber)
     {
         var identificationExists = await _validateUserUseCase.IdentificationNumberExistsAsync(identificationNumber);
         var message = identificationExists ? "Identification already in use" : "Identification not in use";

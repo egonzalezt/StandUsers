@@ -25,7 +25,7 @@ public class CentralizerUserCreatedUseCase(IPostProcessor<UserOwnedDto> postProc
             user.ActivateUserByGovCarpeta();
             user.Activate();
             logger.LogInformation("User is now part of the system sending Broadcast message");
-            var userOwned = new UserOwnedDto { Email = user.Email, Id = user.Id, IdentificationNumber = user.IdentificationNumber };
+            var userOwned = new UserOwnedDto { Email = user.Email, Id = user.Id, IdentificationNumber = user.IdentificationNumber, Name = user.Name };
             postProcessor.NotifyCreation(userOwned, UserOperations.CreateUser.ToString(), NotificationTypes.Broadcast);
         }
     }

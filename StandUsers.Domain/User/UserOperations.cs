@@ -3,6 +3,7 @@
 public enum UserOperations
 {
     CreateUser,
+    ExistsOnOtherProvider,
     UnregisterUser,
     VerifyUser
 }

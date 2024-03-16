@@ -17,4 +17,9 @@ internal class UserQueryRepository : IUserQueryRepository
     {
         await _context.AddAsync(user);
     }
+
+    public void Delete(User user)
+    {
+        _context.Users.Remove(user);
+    }
 }

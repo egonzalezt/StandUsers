@@ -15,14 +15,13 @@ internal class UserCreatedPostProcessor(ILogger<UserCreatedPostProcessor> logger
     public void NotifyCreation(UserOwnedDto entity, string messageType, NotificationTypes notificationType)
     {
         logger.LogInformation("Sending message on the queue {queue} to notify user own", _publisherConfiguration.UserOwnedBroadcastQueue);
-        if(notificationType == NotificationTypes.Broadcast)
+        var headers = new EventHeaders(messageType, entity.Id);
+        if (notificationType == NotificationTypes.Broadcast)
         {
-            var headers = new EventHeaders(messageType, entity.Id);
             messageSender.SendBroadcast(entity, _publisherConfiguration.UserOwnedBroadcastQueue, headers.GetAttributesAsDictionary());
         }
         else
         {
-            var headers = new EventHeaders(messageType, entity.Id);
             messageSender.SendMessage(entity, _publisherConfiguration.UserOwnedBroadcastQueue, headers.GetAttributesAsDictionary());
         }
         logger.LogInformation("Message sent using the publisher mode {mode}", notificationType.ToString());
@@ -30,6 +29,16 @@ internal class UserCreatedPostProcessor(ILogger<UserCreatedPostProcessor> logger
 
     public void NotifyDeletion(UserOwnedDto entity, string messageType, NotificationTypes notificationType)
     {
-        throw new NotImplementedException();
+        logger.LogInformation("Sending message on the queue {queue}", _publisherConfiguration.UserOwnedBroadcastQueue);
+        var headers = new EventHeaders(messageType, entity.Id);
+        if (notificationType == NotificationTypes.Broadcast)
+        {
+            messageSender.SendBroadcast(entity, _publisherConfiguration.UserNotificationsQueue, headers.GetAttributesAsDictionary());
+        }
+        else
+        {
+            messageSender.SendMessage(entity, _publisherConfiguration.UserNotificationsQueue, headers.GetAttributesAsDictionary());
+        }
+        logger.LogInformation("Message sent using the publisher mode {mode}", notificationType.ToString());
     }
 }

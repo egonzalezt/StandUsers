@@ -6,11 +6,11 @@ using Domain.User;
 using Domain.User.Repositories;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using StandUsers.Application.Interfaces;
-using StandUsers.Domain.User.Dtos;
-using StandUsers.Domain.SharedKernel;
+using Application.Interfaces;
+using Domain.User.Dtos;
+using Domain.SharedKernel;
 
-public class CentralizerUserCreatedUseCase(IPostProcessor<UserOwnedDto> postProcessor, IUserCommandRepository userCommandRepository, ILogger<CentralizerUserCreatedUseCase> logger) : ICentralizerUserUseCase
+public class CentralizerUserCreatedUseCase(IPostProcessor<UserOwnedDto> postProcessor, IUserCommandRepository userCommandRepository, IUserQueryRepository userQueryRepository, ILogger<CentralizerUserCreatedUseCase> logger) : ICentralizerUserUseCase
 {
     public UserOperations UseCase { get; } = UserOperations.CreateUser;
 
@@ -27,6 +27,13 @@ public class CentralizerUserCreatedUseCase(IPostProcessor<UserOwnedDto> postProc
             logger.LogInformation("User is now part of the system sending Broadcast message");
             var userOwned = new UserOwnedDto { Email = user.Email, Id = user.Id, IdentificationNumber = user.IdentificationNumber, Name = user.Name };
             postProcessor.NotifyCreation(userOwned, UserOperations.CreateUser.ToString(), NotificationTypes.Broadcast);
+        }
+        if(response.StatusCode == 501)
+        {
+            logger.LogInformation("User with Id {id}, is on other system", id);
+            userQueryRepository.Delete(user);
+            var userOwned = new UserOwnedDto { Email = user.Email, Id = user.Id, IdentificationNumber = user.IdentificationNumber, Name = user.Name };
+            postProcessor.NotifyDeletion(userOwned, UserOperations.ExistsOnOtherProvider.ToString(), NotificationTypes.Single);
         }
     }
 }

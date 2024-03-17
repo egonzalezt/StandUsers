@@ -26,6 +26,17 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.UseCors(builder =>
+{
+    builder.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader()
+           .WithExposedHeaders("X-Pagination-Total-Pages")
+           .WithExposedHeaders("X-Pagination-Next-Page")
+           .WithExposedHeaders("X-Pagination-Has-Next-Page")
+           .WithExposedHeaders("X-Pagination-Total-Pages");
+});
+
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<StandUsersDbContext>();

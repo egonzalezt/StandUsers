@@ -5,5 +5,7 @@ public enum UserOperations
     CreateUser,
     ExistsOnOtherProvider,
     UnregisterUser,
-    VerifyUser
+    VerifyUser,
+    TransferUser,
+    StandUserResponse
 }

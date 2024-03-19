@@ -12,6 +12,7 @@ public static class ConfigureApplication
         services.AddCentralizerUseCases();
         services.AddScoped<IValidateUserUseCase, ValidateUserUseCase>();
         services.AddScoped<ICreateUserUseCase, CreateUserUseCase>();
+        services.AddScoped<IUserTransferRequestUseCase, UserTransferRequestUseCase>();
     }
 
     public static void AddCentralizerUseCases(this IServiceCollection services)

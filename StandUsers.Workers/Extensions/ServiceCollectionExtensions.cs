@@ -26,5 +26,6 @@ public static class ServiceCollectionExtensions
 
         services.AddHostedService<UsersWorker>();
         services.AddHostedService<GovCarpetaWorker>();
+        services.AddHostedService<TransferWorker>();
     }
 }

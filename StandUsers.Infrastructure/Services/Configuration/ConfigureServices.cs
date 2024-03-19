@@ -15,6 +15,7 @@ public static class ConfigureServices
         services.AddEntityFramework(configuration);
         services.AddRepositories();
         services.AddSingleton<IPostProcessor<UserOwnedDto>, UserCreatedPostProcessor>();
+        services.AddSingleton<IPostProcessor<UserTransferResponseDto>, UserUnregisteredPostProcessor>();
         services.AddSingleton<IMessageSender, RabbitMQMessageSender>();
     }
 }

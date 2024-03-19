@@ -1,6 +1,6 @@
 ﻿namespace StandUsers.Workers.Exceptions;
 
-using StandUsers.Domain.SharedKernel.Exceptions;
+using Domain.SharedKernel.Exceptions;
 
 public class InvalidBodyException : BusinessException
 {

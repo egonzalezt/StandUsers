@@ -6,5 +6,4 @@ public interface IUserCommandRepository
     Task<bool> ExistsByIdAsync(Guid id); 
     Task<bool> ExistsByEmailAsync(string email);
     Task<bool> ExistsByIdentificationNumberAsync(long identificationNumber);
-
 }

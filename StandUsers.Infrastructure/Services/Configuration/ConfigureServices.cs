@@ -5,8 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using EntityFrameworkCore;
 using Application.Interfaces;
 using Domain.User.Dtos;
-using Infrastructure.SystemPostProcessor;
-using Infrastructure.MessageBroker.Publisher;
+using SystemPostProcessor;
+using MessageBroker.Publisher;
 
 public static class ConfigureServices
 {

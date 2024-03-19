@@ -60,4 +60,3 @@ public class RabbitMQMessageSender : IMessageSender
         _logger.LogInformation("Broadcast message sent on the exchange: {exchangeName}", exchangeName);
     }
 }
-

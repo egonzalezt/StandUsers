@@ -2,7 +2,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Domain.User;
-using StandUsers.Infrastructure.EntityFrameworkCore.DbContext.ModelBuilders;
+using Infrastructure.EntityFrameworkCore.DbContext.ModelBuilders;
 
 public class StandUsersDbContext : DbContext
 {

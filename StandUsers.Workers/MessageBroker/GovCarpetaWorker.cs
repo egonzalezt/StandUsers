@@ -51,6 +51,14 @@ public class GovCarpetaWorker : BaseRabbitMQWorker
             var database = scope.ServiceProvider.GetRequiredService<StandUsersDbContext>();
             await database.SaveChangesAsync();
         }
+        if(operation == UserOperations.UnregisterUser)
+        {
+            var createUser = JsonSerializer.Deserialize<GenericResponse<string>>(message) ?? throw new InvalidBodyException();
+            var useCase = scope.ServiceProvider.GetServices<ICentralizerUserUseCase>().First(s => s.UseCase == operation);
+            await useCase.ExecuteAsync(createUser, userId);
+            var database = scope.ServiceProvider.GetRequiredService<StandUsersDbContext>();
+            await database.SaveChangesAsync();
+        }
         channel.BasicAck(eventArgs.DeliveryTag, false);
         return;
     }

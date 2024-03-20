@@ -9,7 +9,7 @@ using Domain.User.Dtos;
 using Domain.User.Repositories;
 using Exceptions;
 
-public class CentralizerUnregisterUserUseCase(IPostProcessor<UserTransferResponseDto> postProcessor, IUserCommandRepository userCommandRepository, IUserQueryRepository userQueryRepository, ILogger<CentralizerUserCreatedUseCase> logger) : ICentralizerUserUseCase
+public class CentralizerUnregisterUserUseCase(IPostProcessor<UserTransferResponseDto> postProcessor, IUserCommandRepository userCommandRepository, IUserQueryRepository userQueryRepository, ILogger<CentralizerUnregisterUserUseCase> logger) : ICentralizerUserUseCase
 {
     public UserOperations UseCase { get; } = UserOperations.UnregisterUser;
 
@@ -18,6 +18,8 @@ public class CentralizerUnregisterUserUseCase(IPostProcessor<UserTransferRespons
         logger.LogInformation("GovCarpeta answer the request to unregister a new user");
         var id = Guid.Parse(userId);
         var user = await userCommandRepository.GetAsync(id) ?? throw new UserNotFoundException(userId);
+        user.DeactivateGovCarpeta();
+        userQueryRepository.Update(user);
         if (response.StatusCode == 200 || response.StatusCode == 201 || response.StatusCode == 204)
         {
             logger.LogInformation("User with Id {id}, is not part of the system, replying request to transfer service", id);

@@ -40,6 +40,12 @@ public class User : Entity
         GovCarpetaVerified = true;
     }
 
+    public void DeactivateGovCarpeta()
+    {
+        base.SetUpdated();
+        GovCarpetaVerified = false;
+    }
+
     public void Activate()
     {
         base.SetUpdated();

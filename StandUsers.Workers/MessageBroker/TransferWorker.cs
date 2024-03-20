@@ -69,5 +69,6 @@ public class TransferWorker(
         byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonResult);
         var requestQueue = _publisherQueue.UserRequestQueue;
         channel.BasicPublish("", requestQueue, properties, jsonBytes);
+        logger.LogInformation("User with Id {userId} is pending for GovCarpeta response to continue with the process", userId);
     }
 }

@@ -22,4 +22,9 @@ internal class UserQueryRepository : IUserQueryRepository
     {
         _context.Users.Remove(user);
     }
+
+    public void Update(User user)
+    {
+        _context.Update(user);
+    }
 }
